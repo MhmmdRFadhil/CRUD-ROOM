@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_product_name" />
 
     <CheckBox
-        android:id="@+id/cb_is_sell"
+        android:id="@+id/cb_sell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_sale_price"
@@ -76,10 +76,10 @@
         android:textColor="@color/dark"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cb_is_sell" />
+        app:layout_constraintTop_toBottomOf="@+id/cb_sell" />
 
     <CheckBox
-        android:id="@+id/cb_is_buy"
+        android:id="@+id/cb_buy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_purchase_price"
@@ -96,8 +96,9 @@
         android:text="@string/selling_price_title"
         android:textColor="@color/dark"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cb_is_buy" />
+        app:layout_constraintTop_toBottomOf="@+id/cb_buy" />
 
     <com.ryz.myapplication.common.CustomEditText
         android:id="@+id/edt_selling_price"
@@ -110,6 +111,7 @@
         android:minHeight="48dp"
         android:textColorHint="@color/secondary_color"
         android:textSize="14sp"
+        android:visibility="gone"
         app:MyApplication_setClearIconVisible="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_selling_price"
@@ -125,6 +127,7 @@
         android:text="@string/purchase_price_title"
         android:textColor="@color/dark"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_selling_price" />
 
@@ -139,6 +142,7 @@
         android:minHeight="48dp"
         android:textColorHint="@color/secondary_color"
         android:textSize="14sp"
+        android:visibility="gone"
         app:MyApplication_setClearIconVisible="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_purchase_price"

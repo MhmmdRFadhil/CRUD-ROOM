@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.ryz.myapplication.MainActivity
 import com.ryz.myapplication.R
@@ -28,6 +29,13 @@ class ProductInputFragment : Fragment() {
         setUpToolbar()
         setUpMenu()
 
+        binding.cbSell.setOnCheckedChangeListener { _, isChecked ->
+            showHideSellPrice(isChecked)
+        }
+
+        binding.cbBuy.setOnCheckedChangeListener { _, isChecked ->
+            showHideBuyPrice(isChecked)
+        }
     }
 
     private fun setUpToolbar() {
@@ -50,6 +58,16 @@ class ProductInputFragment : Fragment() {
                 else -> false
             }
         }
+    }
+
+    private fun showHideSellPrice(isShow: Boolean) {
+        binding.tvSellingPrice.isVisible = isShow
+        binding.edtSellingPrice.isVisible = isShow
+    }
+
+    private fun showHideBuyPrice(isShow: Boolean) {
+        binding.tvPurchasePrice.isVisible = isShow
+        binding.edtPurchasePrice.isVisible = isShow
     }
 
     override fun onDestroyView() {
