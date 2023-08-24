@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:textColor="@color/dark"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/tv_selling_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/selling_price_title"
+            android:textColor="@color/secondary_color"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
+
+        <TextView
+            android:id="@+id/tv_selling_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/secondary_color"
+            android:textSize="11sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_selling_price_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
+            tools:text="Rp. 500000" />
+
+        <TextView
+            android:id="@+id/tv_purchase_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/purchase_price_title"
+            android:textColor="@color/secondary_color"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_selling_price_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_selling_price_title" />
+
+        <TextView
+            android:id="@+id/tv_purchase_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/secondary_color"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_purchase_price_title"
+            app:layout_constraintStart_toEndOf="@+id/tv_purchase_price_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_purchase_price_title"
+            tools:text="Rp. 500000" />
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/dotted_line"
+            app:layout_constraintEnd_toEndOf="@+id/tv_product_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_purchase_price_title" />
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/edit_title"
+            android:textColor="@color/dark"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_edit"
+            app:layout_constraintEnd_toStartOf="@+id/img_edit"
+            app:layout_constraintTop_toTopOf="@+id/img_edit" />
+
+        <ImageView
+            android:id="@+id/img_edit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/edit_product_title"
+            android:src="@drawable/baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_delete"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/delete_title"
+            android:textColor="@color/dark"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_delete"
+            app:layout_constraintEnd_toStartOf="@+id/img_delete"
+            app:layout_constraintTop_toTopOf="@+id/img_delete" />
+
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/delete_product_title"
+            android:src="@drawable/baseline_delete_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view_divider"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

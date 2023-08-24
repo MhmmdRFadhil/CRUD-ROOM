@@ -15,4 +15,12 @@
     <string name="purchase_price_hint">Masukan harga beli</string>
     <string name="save_title">Simpan</string>
     <string name="product_input_title">Input Produk</string>
+    <string name="edit_title">Edit</string>
+    <string name="edit_product_title">Edit Product</string>
+    <string name="delete_title">Delete</string>
+    <string name="delete_product_title">Delete Product</string>
+    <string name="empty_field_product_name">Nama product harus diisi</string>
+    <string name="empty_field_selling_price">Harga jual harus diisi</string>
+    <string name="empty_field_purchase_price">Harga beli harus diisi</string>
+    <string name="data_saved_successfully_message">Data berhasil disimpan</string>
 </resources>

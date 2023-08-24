@@ -11,7 +11,7 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(productData: ProductData)
 
-    @Query("SELECT * FROM PRODUCT_ENTITY WHERE isSell = 1 & isBuy = 1")
+    @Query("SELECT * FROM PRODUCT_ENTITY")
     fun getAllData(): LiveData<List<ProductData>>
 
     @Update

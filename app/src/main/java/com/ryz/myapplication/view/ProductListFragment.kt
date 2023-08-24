@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryz.myapplication.MainActivity
 import com.ryz.myapplication.R
 import com.ryz.myapplication.common.customToolbar
 import com.ryz.myapplication.databinding.FragmentProductListBinding
+import com.ryz.myapplication.viewmodel.ProductViewModel
 
 class ProductListFragment : Fragment() {
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var productAdapter: ProductAdapter
+    private lateinit var productViewModel: ProductViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +31,11 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        productViewModel = (activity as MainActivity).productViewModel
+
         setUpToolbar()
         setUpMenu()
+        showRecyclerViewAllProduct()
     }
 
     private fun setUpToolbar() {
@@ -46,7 +54,24 @@ class ProductListFragment : Fragment() {
                     findNavController().navigate(R.id.action_productListFragment_to_productInputFragment)
                     true
                 }
+
                 else -> false
+            }
+        }
+    }
+
+
+    private fun showRecyclerViewAllProduct() {
+        productAdapter = ProductAdapter()
+        binding.rvProduct.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = productAdapter
+        }
+
+        activity?.let {
+            productViewModel.getAllProduct().observe(viewLifecycleOwner) {
+                productAdapter.submitList(it)
             }
         }
     }
