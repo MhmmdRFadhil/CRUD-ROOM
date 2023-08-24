@@ -1,5 +1,8 @@
 package com.ryz.myapplication.common
 
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.ryz.myapplication.R
@@ -25,4 +28,9 @@ fun MaterialToolbar.customToolbar(
 
         if (isShowMenu && menuId != 0) inflateMenu(menuId)
     }
+}
+
+fun Context.hideSoftInput(view: View) {
+    val im = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    im.hideSoftInputFromWindow(view.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
 }
