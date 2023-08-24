@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomEditText">
+        <attr name="MyApplication_setClearIconVisible" format="boolean" />
+        <attr name="MyApplication_clearIconTint" format="color" />
+    </declare-styleable>
+</resources>

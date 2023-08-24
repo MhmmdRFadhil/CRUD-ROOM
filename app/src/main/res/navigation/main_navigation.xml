@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/productInputFragment">
+
+    <fragment
+        android:id="@+id/productInputFragment"
+        android:name="com.ryz.myapplication.view.ProductInputFragment"
+        android:label="fragment_product_input"
+        tools:layout="@layout/fragment_product_input" >
+        <action
+            android:id="@+id/action_productInputFragment_to_productListFragment"
+            app:destination="@id/productListFragment"
+            app:popUpTo="@id/productInputFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.ryz.myapplication.view.ProductListFragment"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/action_productListFragment_to_productInputFragment"
+            app:destination="@id/productInputFragment"
+            app:popUpTo="@id/productListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

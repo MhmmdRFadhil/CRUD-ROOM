@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_product_title">Tambah Produk</string>
+    <string name="product_list_title">Daftar Produk</string>
+    <string name="product_name_title">Nama Produk</string>
+    <string name="product_name_hint">Masukan nama produk</string>
+    <string name="sale_price_displayed">Apakah harga jual ditampilkan?</string>
+    <string name="show_sale_price">Tampil di Penjualan</string>
+    <string name="purchase_price_displayed">Apakah harga beli ditampilkan?</string>
+    <string name="show_purchase_price">Tampil di Pembelian</string>
+    <string name="selling_price_title">Harga Jual</string>
+    <string name="selling_price_hint">Masukan harga jual</string>
+    <string name="purchase_price_title">Harga Beli</string>
+    <string name="purchase_price_hint">Masukan harga beli</string>
+    <string name="save_title">Simpan</string>
+    <string name="product_input_title">Input Produk</string>
 </resources>
