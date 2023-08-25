@@ -23,4 +23,8 @@
     <string name="empty_field_selling_price">Harga jual harus diisi</string>
     <string name="empty_field_purchase_price">Harga beli harus diisi</string>
     <string name="data_saved_successfully_message">Data berhasil disimpan</string>
+    <string name="yes">Yes</string>
+    <string name="no">no</string>
+    <string name="delete_alert_title">Hapus Produk?</string>
+    <string name="delete_alert_message">Apakah anda yakin ingin menghapus produk ini?</string>
 </resources>
