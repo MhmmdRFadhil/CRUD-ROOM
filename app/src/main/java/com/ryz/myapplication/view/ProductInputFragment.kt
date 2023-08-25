@@ -36,13 +36,8 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         setUpToolbar()
         setUpMenu()
 
-        binding.cbSell.setOnCheckedChangeListener { _, isChecked ->
-            showHideSellPrice(isChecked)
-        }
-
-        binding.cbBuy.setOnCheckedChangeListener { _, isChecked ->
-            showHideBuyPrice(isChecked)
-        }
+        setupSellCheckBox()
+        setupBuyCheckBox()
 
         binding.btnSave.setOnClickListener(this)
     }
@@ -69,40 +64,79 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun saveProductData() {
-        binding.apply {
-            val productName = edtProductName.text.toString().trim()
-            val isSell = cbSell.isChecked
-            val isBuy = cbBuy.isChecked
-            val sellingPrice = if (isSell) edtSellingPrice.text.toString().trim() else null
-            val purchasePrice = if (isBuy) edtPurchasePrice.text.toString().trim() else null
+    private fun setupSellCheckBox() {
+        binding.cbSell.setOnCheckedChangeListener { _, isChecked ->
+            showHideSellPrice(isChecked)
+        }
+    }
 
-            val productData = ProductData(
-                productName = productName,
-                isSell = isSell,
-                isBuy = isBuy,
-                sellingPrice = sellingPrice?.toLong(),
-                purchasePrice = purchasePrice?.toLong()
-            )
-
-            productViewModel.insertProduct(productData)
+    private fun setupBuyCheckBox() {
+        binding.cbBuy.setOnCheckedChangeListener { _, isChecked ->
+            showHideBuyPrice(isChecked)
         }
     }
 
     private fun showHideSellPrice(isShow: Boolean) {
-        binding.tvSellingPrice.isVisible = isShow
-        binding.edtSellingPrice.isVisible = isShow
+        with(binding) {
+            tvSellingPrice.isVisible = isShow
+            edtSellingPrice.isVisible = isShow
+        }
     }
 
     private fun showHideBuyPrice(isShow: Boolean) {
-        binding.tvPurchasePrice.isVisible = isShow
-        binding.edtPurchasePrice.isVisible = isShow
+        with(binding) {
+            tvPurchasePrice.isVisible = isShow
+            edtPurchasePrice.isVisible = isShow
+        }
     }
 
     private fun clearFocusAndHideSoftInput(vararg views: View) {
         views.forEach { it.clearFocus() }
         val context = requireContext()
         views.forEach { context.hideSoftInput(it) }
+    }
+
+    private fun validateInputs(
+        productName: String,
+        isSell: Boolean,
+        sellingPrice: String,
+        isBuy: Boolean,
+        purchasePrice: String
+    ): Boolean {
+        when {
+            productName.isEmpty() -> {
+                binding.edtProductName.apply {
+                    error = getString(R.string.empty_field_product_name)
+                    requestFocus()
+                }
+                return false
+            }
+
+            isSell && sellingPrice.isEmpty() -> {
+                binding.edtSellingPrice.apply {
+                    error = getString(R.string.empty_field_selling_price)
+                    requestFocus()
+                }
+                return false
+            }
+
+            isBuy && purchasePrice.isEmpty() -> {
+                binding.edtPurchasePrice.apply {
+                    error = getString(R.string.empty_field_purchase_price)
+                    requestFocus()
+                }
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun saveProductData(productData: ProductData) {
+        productViewModel.insertProduct(productData)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onClick(p0: View?) {
@@ -115,35 +149,24 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
                     val sellingPrice = edtSellingPrice.text.toString().trim()
                     val purchasePrice = edtPurchasePrice.text.toString().trim()
 
-                    when {
-                        productName.isEmpty() -> {
-                            edtProductName.error = getString(R.string.empty_field_product_name)
-                            edtProductName.requestFocus()
-                        }
+                    if (validateInputs(productName, isSell, sellingPrice, isBuy, purchasePrice)) {
+                        val productData = ProductData(
+                            productName = productName,
+                            isSell = isSell,
+                            isBuy = isBuy,
+                            sellingPrice = sellingPrice.toLongOrNull(),
+                            purchasePrice = purchasePrice.toLongOrNull()
+                        )
 
-                        isSell && sellingPrice.isEmpty() -> {
-                            edtSellingPrice.error = getString(R.string.empty_field_selling_price)
-                            edtSellingPrice.requestFocus()
-                        }
+                        saveProductData(productData)
 
-                        isBuy && purchasePrice.isEmpty() -> {
-                            edtPurchasePrice.error = getString(R.string.empty_field_purchase_price)
-                            edtPurchasePrice.requestFocus()
-                        }
+                        clearFocusAndHideSoftInput(
+                            binding.edtProductName,
+                            binding.edtSellingPrice,
+                            binding.edtPurchasePrice
+                        )
 
-                        else -> {
-                            clearFocusAndHideSoftInput(
-                                edtProductName,
-                                edtSellingPrice,
-                                edtPurchasePrice
-                            )
-                            saveProductData()
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.data_saved_successfully_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        showToast(getString(R.string.data_saved_successfully_message))
                     }
                 }
             }

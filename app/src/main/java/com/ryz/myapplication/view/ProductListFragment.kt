@@ -60,15 +60,21 @@ class ProductListFragment : Fragment() {
         }
     }
 
-
     private fun showRecyclerViewAllProduct() {
+        setUpRecyclerView()
+        observeProductList()
+    }
+
+    private fun setUpRecyclerView() {
         productAdapter = ProductAdapter()
         binding.rvProduct.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = productAdapter
         }
+    }
 
+    private fun observeProductList() {
         activity?.let {
             productViewModel.getAllProduct().observe(viewLifecycleOwner) {
                 productAdapter.submitList(it)
