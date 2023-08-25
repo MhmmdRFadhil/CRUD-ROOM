@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_product_title">Tambah Produk</string>
     <string name="product_list_title">Daftar Produk</string>
     <string name="product_name_title">Nama Produk</string>
