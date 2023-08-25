@@ -142,21 +142,21 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
 
                     when {
                         productName.isEmpty() -> {
-                            binding.edtProductName.apply {
+                            edtProductName.apply {
                                 error = getString(R.string.empty_field_product_name)
                                 requestFocus()
                             }
                         }
 
                         isSell && sellingPrice.isEmpty() -> {
-                            binding.edtSellingPrice.apply {
+                            edtSellingPrice.apply {
                                 error = getString(R.string.empty_field_selling_price)
                                 requestFocus()
                             }
                         }
 
                         isBuy && purchasePrice.isEmpty() -> {
-                            binding.edtPurchasePrice.apply {
+                            edtPurchasePrice.apply {
                                 error = getString(R.string.empty_field_purchase_price)
                                 requestFocus()
                             }

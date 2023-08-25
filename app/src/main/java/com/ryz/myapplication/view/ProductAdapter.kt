@@ -39,7 +39,9 @@ class ProductAdapter(private val clickListener: (ProductData?) -> Unit) :
                     productData.purchasePrice
                 )
                 imgDelete.setOnClickListener { showAlertDialog(productData) }
+                tvDelete.setOnClickListener { showAlertDialog(productData) }
                 imgEdit.setOnClickListener { clickListener(productData) }
+                tvEdit.setOnClickListener { clickListener(productData) }
             }
         }
 
