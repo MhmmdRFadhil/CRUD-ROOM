@@ -50,7 +50,8 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
             productData = ProductData()
         }
 
-        val btnTitle = if (isEdit) "Update" else "Simpan"
+        val btnTitle =
+            if (isEdit) getString(R.string.update_title) else getString(R.string.save_title)
         binding.btnSave.apply {
             text = btnTitle
             setOnClickListener(this@ProductInputFragment)

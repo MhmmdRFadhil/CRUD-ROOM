@@ -28,4 +28,7 @@
     <string name="delete_alert_title">Hapus Produk?</string>
     <string name="delete_alert_message">Apakah anda yakin ingin menghapus produk ini?</string>
     <string name="data_updated_successfully_message">Data berhasil di update</string>
+    <string name="update_title">Update</string>
+    <string name="empty_product_title">Produk masih kosong</string>
+    <string name="empty_product">Empty Product</string>
 </resources>

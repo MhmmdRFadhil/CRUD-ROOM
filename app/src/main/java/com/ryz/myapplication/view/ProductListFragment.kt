@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ryz.myapplication.MainActivity
@@ -79,8 +80,16 @@ class ProductListFragment : Fragment() {
     }
 
     private fun observeProductList() {
-        productViewModel.getAllProduct().observe(viewLifecycleOwner) {
-            productAdapter.submitList(it)
+        productViewModel.getAllProduct().observe(viewLifecycleOwner) { product ->
+            productAdapter.submitList(product)
+            updateUI(product)
+        }
+    }
+
+    private fun updateUI(productData: List<ProductData>) {
+        binding.apply {
+            imgEmptyProduct.isVisible = productData.isEmpty()
+            tvEmptyProduct.isVisible = productData.isEmpty()
         }
     }
 
