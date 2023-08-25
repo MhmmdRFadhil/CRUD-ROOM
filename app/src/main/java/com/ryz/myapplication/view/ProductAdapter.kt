@@ -22,13 +22,13 @@ class ProductAdapter : ListAdapter<ProductData, ProductAdapter.ProductViewHolder
             productViewModel = (itemView.context as MainActivity).productViewModel
             with(binding) {
                 tvProductName.text = productData.productName
-                showHideSellingPrice(productData.isSell, productData.sellingPrice)
-                showHidePurchasePrice(productData.isBuy, productData.purchasePrice)
+                showHideSalePrice(productData.isSell, productData.sellingPrice)
+                showHideBuyPrice(productData.isBuy, productData.purchasePrice)
                 imgDelete.setOnClickListener { showAlertDialog(productData) }
             }
         }
 
-        private fun showHideSellingPrice(isSell: Boolean?, sellingPrice: Long?) {
+        private fun showHideSalePrice(isSell: Boolean?, sellingPrice: Long?) {
             with(binding) {
                 if (isSell == true) {
                     tvSellingPrice.text = sellingPrice.toString()
@@ -39,7 +39,7 @@ class ProductAdapter : ListAdapter<ProductData, ProductAdapter.ProductViewHolder
             }
         }
 
-        private fun showHidePurchasePrice(isBuy: Boolean?, purchasePrice: Long?) {
+        private fun showHideBuyPrice(isBuy: Boolean?, purchasePrice: Long?) {
             with(binding) {
                 if (isBuy == true) {
                     tvPurchasePrice.text = purchasePrice.toString()

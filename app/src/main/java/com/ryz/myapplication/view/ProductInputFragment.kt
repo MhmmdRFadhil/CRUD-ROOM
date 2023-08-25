@@ -33,8 +33,8 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         productViewModel = (activity as MainActivity).productViewModel
 
-        setUpToolbar()
-        setUpMenu()
+        setupToolbar()
+        setupMenu()
 
         setupSellCheckBox()
         setupBuyCheckBox()
@@ -42,7 +42,7 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         binding.btnSave.setOnClickListener(this)
     }
 
-    private fun setUpToolbar() {
+    private fun setupToolbar() {
         binding.layoutToolbars.topAppBar.customToolbar(
             activity as MainActivity,
             title = getString(R.string.product_input_title),
@@ -51,7 +51,7 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         )
     }
 
-    private fun setUpMenu() {
+    private fun setupMenu() {
         binding.layoutToolbars.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.product_list -> {
@@ -66,7 +66,7 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
 
     private fun setupSellCheckBox() {
         binding.cbSell.setOnCheckedChangeListener { _, isChecked ->
-            showHideSellPrice(isChecked)
+            showHideSalePrice(isChecked)
         }
     }
 
@@ -76,7 +76,7 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun showHideSellPrice(isShow: Boolean) {
+    private fun showHideSalePrice(isShow: Boolean) {
         with(binding) {
             tvSellingPrice.isVisible = isShow
             edtSellingPrice.isVisible = isShow

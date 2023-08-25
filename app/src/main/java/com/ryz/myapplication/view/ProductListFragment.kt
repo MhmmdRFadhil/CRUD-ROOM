@@ -33,12 +33,12 @@ class ProductListFragment : Fragment() {
 
         productViewModel = (activity as MainActivity).productViewModel
 
-        setUpToolbar()
-        setUpMenu()
+        setupToolbar()
+        setupMenu()
         showRecyclerViewAllProduct()
     }
 
-    private fun setUpToolbar() {
+    private fun setupToolbar() {
         binding.layoutToolbars.topAppBar.customToolbar(
             activity as MainActivity,
             title = getString(R.string.product_list_title),
@@ -47,7 +47,7 @@ class ProductListFragment : Fragment() {
         )
     }
 
-    private fun setUpMenu() {
+    private fun setupMenu() {
         binding.layoutToolbars.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.add_product -> {
@@ -61,11 +61,11 @@ class ProductListFragment : Fragment() {
     }
 
     private fun showRecyclerViewAllProduct() {
-        setUpRecyclerView()
+        setupRecyclerView()
         observeProductList()
     }
 
-    private fun setUpRecyclerView() {
+    private fun setupRecyclerView() {
         productAdapter = ProductAdapter()
         binding.rvProduct.apply {
             layoutManager = LinearLayoutManager(requireContext())
