@@ -1,10 +1,13 @@
 package com.ryz.myapplication.model.local.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "product_entity")
+@Parcelize
 data class ProductData(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -24,4 +27,4 @@ data class ProductData(
 
     @ColumnInfo(name = "purchasePrice")
     var purchasePrice: Long? = 0
-)
+) : Parcelable

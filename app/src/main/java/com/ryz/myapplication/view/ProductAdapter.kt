@@ -3,6 +3,7 @@ package com.ryz.myapplication.view
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,42 +14,49 @@ import com.ryz.myapplication.databinding.RowItemProductListBinding
 import com.ryz.myapplication.model.local.entity.ProductData
 import com.ryz.myapplication.viewmodel.ProductViewModel
 
-class ProductAdapter : ListAdapter<ProductData, ProductAdapter.ProductViewHolder>(DIFF_CALLBACK) {
+class ProductAdapter(private val clickListener: (ProductData?) -> Unit) :
+    ListAdapter<ProductData, ProductAdapter.ProductViewHolder>(DIFF_CALLBACK) {
     inner class ProductViewHolder(private val binding: RowItemProductListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private lateinit var productViewModel: ProductViewModel
+        private val productViewModel: ProductViewModel by lazy {
+            (itemView.context as MainActivity).productViewModel
+        }
+
         fun bind(productData: ProductData) {
-            productViewModel = (itemView.context as MainActivity).productViewModel
             with(binding) {
                 tvProductName.text = productData.productName
-                showHideSalePrice(productData.isSell, productData.sellingPrice)
-                showHideBuyPrice(productData.isBuy, productData.purchasePrice)
+                showHidePrice(
+                    tvSellingPriceTitle,
+                    tvSellingPrice,
+                    productData.isSell,
+                    productData.sellingPrice
+                )
+                showHidePrice(
+                    tvPurchasePriceTitle,
+                    tvPurchasePrice,
+                    productData.isBuy,
+                    productData.purchasePrice
+                )
                 imgDelete.setOnClickListener { showAlertDialog(productData) }
+                imgEdit.setOnClickListener { clickListener(productData) }
             }
         }
 
-        private fun showHideSalePrice(isSell: Boolean?, sellingPrice: Long?) {
-            with(binding) {
-                if (isSell == true) {
-                    tvSellingPrice.text = sellingPrice.toString()
-                } else {
-                    tvSellingPriceTitle.isVisible = false
-                    tvSellingPrice.isVisible = false
-                }
+        private fun showHidePrice(
+            titleView: TextView,
+            priceView: TextView,
+            isShouldShow: Boolean?,
+            price: Long?
+        ) {
+            if (isShouldShow == true) {
+                priceView.text = price.toString()
+            } else {
+                titleView.isVisible = false
+                priceView.isVisible = false
             }
         }
 
-        private fun showHideBuyPrice(isBuy: Boolean?, purchasePrice: Long?) {
-            with(binding) {
-                if (isBuy == true) {
-                    tvPurchasePrice.text = purchasePrice.toString()
-                } else {
-                    tvPurchasePriceTitle.isVisible = false
-                    tvPurchasePrice.isVisible = false
-                }
-            }
-        }
 
         private fun showAlertDialog(productData: ProductData) {
             AlertDialog.Builder(itemView.context).apply {

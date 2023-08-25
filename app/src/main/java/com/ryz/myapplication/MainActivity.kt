@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        val viewModelFactory = ViewModelFactory(application)
+        val viewModelFactory = ViewModelFactory.getInstance(application)
         productViewModel = ViewModelProvider(this, viewModelFactory)[ProductViewModel::class.java]
     }
 }
