@@ -11,13 +11,15 @@ import com.ryz.myapplication.MainActivity
 import com.ryz.myapplication.R
 import com.ryz.myapplication.common.customToolbar
 import com.ryz.myapplication.databinding.FragmentProductListBinding
+import com.ryz.myapplication.model.local.entity.ProductData
 import com.ryz.myapplication.viewmodel.ProductViewModel
 
 class ProductListFragment : Fragment() {
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var productAdapter: ProductAdapter
+    private val productAdapter: ProductAdapter by lazy { ProductAdapter(::onItemClick) }
+
     private lateinit var productViewModel: ProductViewModel
 
     override fun onCreateView(
@@ -35,7 +37,15 @@ class ProductListFragment : Fragment() {
 
         setupToolbar()
         setupMenu()
-        showRecyclerViewAllProduct()
+        setupRecyclerView()
+
+        observeProductList()
+    }
+
+    private fun onItemClick(productData: ProductData?) {
+        val action = ProductListFragmentDirections.actionProductListFragmentToProductInputFragment()
+            .setDetailData(productData)
+        findNavController().navigate(action)
     }
 
     private fun setupToolbar() {
@@ -60,13 +70,7 @@ class ProductListFragment : Fragment() {
         }
     }
 
-    private fun showRecyclerViewAllProduct() {
-        setupRecyclerView()
-        observeProductList()
-    }
-
     private fun setupRecyclerView() {
-        productAdapter = ProductAdapter()
         binding.rvProduct.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -75,10 +79,8 @@ class ProductListFragment : Fragment() {
     }
 
     private fun observeProductList() {
-        activity?.let {
-            productViewModel.getAllProduct().observe(viewLifecycleOwner) {
-                productAdapter.submitList(it)
-            }
+        productViewModel.getAllProduct().observe(viewLifecycleOwner) {
+            productAdapter.submitList(it)
         }
     }
 

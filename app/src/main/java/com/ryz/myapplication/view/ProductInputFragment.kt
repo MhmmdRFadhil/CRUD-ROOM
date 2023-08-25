@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.ryz.myapplication.MainActivity
 import com.ryz.myapplication.R
 import com.ryz.myapplication.common.customToolbar
@@ -19,7 +21,11 @@ import com.ryz.myapplication.viewmodel.ProductViewModel
 class ProductInputFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentProductInputBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var productViewModel: ProductViewModel
+    private val args: ProductInputFragmentArgs by navArgs()
+    private var productData: ProductData? = null
+    private var isEdit = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +41,34 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
 
         setupToolbar()
         setupMenu()
+        setupCheckBoxes()
 
-        setupSellCheckBox()
-        setupBuyCheckBox()
+        productData = args.detailData
+        if (productData != null) {
+            isEdit = true
+        } else {
+            productData = ProductData()
+        }
 
-        binding.btnSave.setOnClickListener(this)
+        val btnTitle = if (isEdit) "Update" else "Simpan"
+        binding.btnSave.apply {
+            text = btnTitle
+            setOnClickListener(this@ProductInputFragment)
+        }
+
+        if (isEdit) getData(args.detailData)
+    }
+
+    private fun getData(productData: ProductData?) {
+        binding.apply {
+            productData?.let {
+                edtProductName.setText(it.productName)
+                cbSell.isChecked = it.isSell == true
+                cbBuy.isChecked = it.isBuy == true
+                edtSellingPrice.setText(it.sellingPrice?.toString() ?: "")
+                edtPurchasePrice.setText(it.purchasePrice?.toString() ?: "")
+            }
+        }
     }
 
     private fun setupToolbar() {
@@ -64,75 +93,37 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun setupSellCheckBox() {
+    private fun setupCheckBoxes() {
         binding.cbSell.setOnCheckedChangeListener { _, isChecked ->
-            showHideSalePrice(isChecked)
+            showHidePrice(binding.tvSellingPrice, binding.edtSellingPrice, isChecked)
         }
-    }
 
-    private fun setupBuyCheckBox() {
         binding.cbBuy.setOnCheckedChangeListener { _, isChecked ->
-            showHideBuyPrice(isChecked)
+            showHidePrice(binding.tvPurchasePrice, binding.edtPurchasePrice, isChecked)
         }
     }
 
-    private fun showHideSalePrice(isShow: Boolean) {
-        with(binding) {
-            tvSellingPrice.isVisible = isShow
-            edtSellingPrice.isVisible = isShow
-        }
-    }
-
-    private fun showHideBuyPrice(isShow: Boolean) {
-        with(binding) {
-            tvPurchasePrice.isVisible = isShow
-            edtPurchasePrice.isVisible = isShow
-        }
+    private fun showHidePrice(titleView: TextView, priceView: TextView, isShouldShow: Boolean) {
+        titleView.isVisible = isShouldShow
+        priceView.isVisible = isShouldShow
     }
 
     private fun clearFocusAndHideSoftInput(vararg views: View) {
-        views.forEach { it.clearFocus() }
         val context = requireContext()
-        views.forEach { context.hideSoftInput(it) }
-    }
-
-    private fun validateInputs(
-        productName: String,
-        isSell: Boolean,
-        sellingPrice: String,
-        isBuy: Boolean,
-        purchasePrice: String
-    ): Boolean {
-        when {
-            productName.isEmpty() -> {
-                binding.edtProductName.apply {
-                    error = getString(R.string.empty_field_product_name)
-                    requestFocus()
-                }
-                return false
-            }
-
-            isSell && sellingPrice.isEmpty() -> {
-                binding.edtSellingPrice.apply {
-                    error = getString(R.string.empty_field_selling_price)
-                    requestFocus()
-                }
-                return false
-            }
-
-            isBuy && purchasePrice.isEmpty() -> {
-                binding.edtPurchasePrice.apply {
-                    error = getString(R.string.empty_field_purchase_price)
-                    requestFocus()
-                }
-                return false
-            }
+        views.forEach {
+            it.clearFocus()
+            context.hideSoftInput(it)
         }
-        return true
     }
 
     private fun saveProductData(productData: ProductData) {
         productViewModel.insertProduct(productData)
+        showToast(getString(R.string.data_saved_successfully_message))
+    }
+
+    private fun updateProduct(productData: ProductData) {
+        productViewModel.updateProduct(productData)
+        showToast(getString(R.string.data_updated_successfully_message))
     }
 
     private fun showToast(message: String) {
@@ -149,24 +140,49 @@ class ProductInputFragment : Fragment(), View.OnClickListener {
                     val sellingPrice = edtSellingPrice.text.toString().trim()
                     val purchasePrice = edtPurchasePrice.text.toString().trim()
 
-                    if (validateInputs(productName, isSell, sellingPrice, isBuy, purchasePrice)) {
-                        val productData = ProductData(
-                            productName = productName,
-                            isSell = isSell,
-                            isBuy = isBuy,
-                            sellingPrice = sellingPrice.toLongOrNull(),
-                            purchasePrice = purchasePrice.toLongOrNull()
-                        )
+                    when {
+                        productName.isEmpty() -> {
+                            binding.edtProductName.apply {
+                                error = getString(R.string.empty_field_product_name)
+                                requestFocus()
+                            }
+                        }
 
-                        saveProductData(productData)
+                        isSell && sellingPrice.isEmpty() -> {
+                            binding.edtSellingPrice.apply {
+                                error = getString(R.string.empty_field_selling_price)
+                                requestFocus()
+                            }
+                        }
 
-                        clearFocusAndHideSoftInput(
-                            binding.edtProductName,
-                            binding.edtSellingPrice,
-                            binding.edtPurchasePrice
-                        )
+                        isBuy && purchasePrice.isEmpty() -> {
+                            binding.edtPurchasePrice.apply {
+                                error = getString(R.string.empty_field_purchase_price)
+                                requestFocus()
+                            }
+                        }
 
-                        showToast(getString(R.string.data_saved_successfully_message))
+                        else -> {
+                            productData?.let {
+                                it.productName = productName
+                                it.isSell = isSell
+                                it.isBuy = isBuy
+                                it.sellingPrice = sellingPrice.toLongOrNull()
+                                it.purchasePrice = purchasePrice.toLongOrNull()
+                            }
+
+                            if (isEdit) {
+                                updateProduct(productData as ProductData)
+                            } else {
+                                saveProductData(productData as ProductData)
+
+                                clearFocusAndHideSoftInput(
+                                    binding.edtProductName,
+                                    binding.edtSellingPrice,
+                                    binding.edtPurchasePrice
+                                )
+                            }
+                        }
                     }
                 }
             }

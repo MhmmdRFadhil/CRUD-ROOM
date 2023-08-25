@@ -27,4 +27,5 @@
     <string name="no">no</string>
     <string name="delete_alert_title">Hapus Produk?</string>
     <string name="delete_alert_message">Apakah anda yakin ingin menghapus produk ini?</string>
+    <string name="data_updated_successfully_message">Data berhasil di update</string>
 </resources>
